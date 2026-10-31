@@ -1,7 +1,6 @@
 /**
  * Coin to Win (Puli-Maka) Board Game Engine
  * - 37-Node Asymmetric Graph (2 Hunters vs 24 Defenders)
- * - Original test5.html styling strictly preserved
  * - Player vs Player & Player vs Computer Mode (AI)
  * - 150 Moves Cap: Player 2 wins if >= 12 coins remain, else Draw
  * - Player 1 Wins when 16 defenders are captured
@@ -118,7 +117,7 @@ const PuliMakaGame = (function() {
     }
     if (!cand) return null;
     const l1 = edges.some(([u, v]) => (u === start && v === cand) || (v === start && u === cand));
-    const l2 = edges.some(([u, v]) => (u === cand && v === end) || (v === candidate && u === end));
+    const l2 = edges.some(([u, v]) => (u === cand && v === end) || (v === cand && u === end));
     return (l1 && l2) ? cand : null;
   }
 
@@ -182,8 +181,7 @@ const PuliMakaGame = (function() {
 
       if (isP1) {
         circle.setAttribute("r", 25);
-        circle.setAttribute("fill", "#ef4444");
-        circle.setAttribute("stroke-width", "2.5");
+        circle.setAttribute("fill", "#ff007f");
         circle.setAttribute("filter", "url(#p1Glow)");
         const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
         text.setAttribute("x", cx);
@@ -194,8 +192,7 @@ const PuliMakaGame = (function() {
         g.appendChild(text);
       } else if (isP2) {
         circle.setAttribute("r", 22);
-        circle.setAttribute("fill", "#0284c7");
-        circle.setAttribute("stroke-width", "2");
+        circle.setAttribute("fill", "#00f3ff");
         circle.setAttribute("filter", "url(#p2Glow)");
         const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
         text.setAttribute("x", cx);
@@ -205,10 +202,9 @@ const PuliMakaGame = (function() {
         g.appendChild(circle);
         g.appendChild(text);
       } else {
-        circle.setAttribute("r", 18);
-        circle.setAttribute("fill", "#27303d");
-        circle.setAttribute("stroke-width", "1.5");
-        circle.setAttribute("stroke", "#4b5563");
+        circle.setAttribute("r", 15);
+        circle.setAttribute("fill", "#0f1226");
+        circle.setAttribute("stroke", "#9d00ff");
         g.appendChild(circle);
       }
 
@@ -218,7 +214,7 @@ const PuliMakaGame = (function() {
 
   function onNodeClicked(node) {
     if (!gameStartedOnBoard || gameOver) return;
-    if (isAiMode && turn === "P2") return;
+    if (isAiMode && turn === "P2") return; // Block human click on AI turn
 
     if (turn === "P1") handleP1Turn(node);
     else handleP2Turn(node);
@@ -270,7 +266,7 @@ const PuliMakaGame = (function() {
     }
 
     const mid = findMiddle(start, target);
-    if (mid && p2Pieces.includes(mid)) {
+    if (mid && p2Pieces.includes(mid) && !p1Pieces.includes(target) && !p2Pieces.includes(target)) {
       p2Pieces = p2Pieces.filter(m => m !== mid);
       p1Pieces[selectedP1Index] = target;
       selectedP1Index = null;
@@ -321,14 +317,17 @@ const PuliMakaGame = (function() {
     }
   }
 
+  // Computer AI for Player 2 (Defenders)
   function runP2AiStep() {
     if (gameOver || turn !== "P2") return;
 
+    // AI Phase 1: Place reserves
     if (reserveP2 > 0) {
       const emptyNodes = Object.keys(coords)
         .map(Number)
         .filter(n => !p1Pieces.includes(n) && !p2Pieces.includes(n));
 
+      // Strategic placement: prioritize nodes adjacent to hunters
       let chosen = null;
       for (const p of p1Pieces) {
         const adj = emptyNodes.filter(n => isEdge(p, n));
@@ -355,6 +354,7 @@ const PuliMakaGame = (function() {
       return;
     }
 
+    // AI Phase 2: Move defenders on board
     const moves = [];
     for (const defender of p2Pieces) {
       for (const nodeStr of Object.keys(coords)) {
@@ -442,12 +442,12 @@ const PuliMakaGame = (function() {
     bar.style.width = ((timeRemaining / 90) * 100) + "%";
 
     if (timeRemaining <= 15) {
-      clock.style.color = "#f87171";
-      bar.style.backgroundColor = "#ef4444";
+      clock.style.color = "#ff007f";
+      bar.style.backgroundColor = "#ff007f";
       playTone(180, 'sine', 0.05);
     } else {
-      clock.style.color = "#22c55e";
-      bar.style.backgroundColor = "#22c55e";
+      clock.style.color = "#00f3ff";
+      bar.style.backgroundColor = "#00f3ff";
     }
   }
 

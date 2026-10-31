@@ -1,29 +1,16 @@
-# TNK Games Multi-Board Arcade Package
+# TNK Games Multi-Board Arcade Package (v1.4)
 
-## File Structure & Modularity
+## Project Directory & Independent Game Files
 ```
 ├── index.html           # Main Portal Hub + Universal Header + Google AdSense slots
-├── styles.css           # Styling preserving test5.html Coin to Win + test2.1 tokens
+├── styles.css           # Cyber Synthwave theme & glowing neon tokens
 ├── games/
-│   ├── tictactoe.js     # Tic-Tac-Toe ONLY: test2.1 mechanics (3x3, 4x4, 5x5, 3-player mode removed, 2P & Neural AI)
-│   └── pulimaka.js      # Coin to Win ONLY: 37-node asymmetric board, 150 moves cap, Player vs Computer mode
-└── README.md
+│   ├── tictactoe.js     # Cyber Neon Tic-Tac-Toe: 3x3, 6x6, 9x9 with Neural AI
+│   ├── pulimaka.js      # Coin to Win (Puli-Maka): Asymmetric 37-node strategy
+│   └── ludo.js          # Cyber Neon Ludo: 15x15 board, 2P/3P/4P & Bot AI
 ```
 
-### 1. Unified Top Banner:
-- Both games and the Home Hub share the identical branded header: **TNK Arena // GAME IT ENHANCE YOUR MIND**.
-
-### 2. Google AdSense Ready:
-- Dedicated, responsive AdSense slots (`.adsense-slot-wrapper`) are placed across all screens (Top Leaderboard, Sidebar Rectangle 300x250, and Bottom Anchor Banner).
-
-### 3. Coin to Win Styling Strictly Preserved:
-- The SVG board nodes, lines, color scheme (`#0a0d14`, `#141a24`, `#273142`, `#ef4444`, `#38bdf8`), and sidebar scorecard from `test5.html` are strictly preserved.
-
-### 4. Tic-Tac-Toe from test2.1:
-- Replaced with `test2.1.html` mechanics: Cyan X and Pink O glowing tokens with pop animations.
-- 3-player mode removed; supports **3x3**, **4x4**, **5x5** levels with **2 Players** and **Vs Computer** mode.
-
-### 5. Individual Game Editing:
-- To update Tic-Tac-Toe rules or levels, edit `games/tictactoe.js`.
-- To update Coin to Win rules or board geometry, edit `games/pulimaka.js`.
-- `index.html` remains clean and unchanged!
+## Features
+- **Cyber Neon Tic-Tac-Toe**: Dynamic $3\times3$, $6\times6$, and $9\times9$ boards with win streaking, 45s turn timer, and heuristic AI.
+- **Cyber Neon Ludo**: Full 15×15 circuit, 4 player support (2P, 3P, 4P), Bot AI, token hopping, and capture dynamics.
+- **Coin to Win (Puli–Maka)**: Traditional Indian 37-node asymmetric tiger/goat board strategy with 150-move cap.
